@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ярослав Мартынов</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0a0a0f;
+      --surface:   #12121a;
+      --card:      #1a1a28;
+      --border:    #2a2a40;
+      --accent:    #6c63ff;
+      --accent2:   #ff6584;
+      --gold:      #f5a623;
+      --text:      #e8e8f0;
+      --muted:     #7878a0;
+      --tg:        #29b6f6;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── animated background ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 20%, rgba(108,99,255,.12) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 80% 80%, rgba(255,101,132,.08) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    /* ── hero ── */
+    .hero {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .avatar-wrap {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 28px;
+    }
+
+    .avatar {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      box-shadow: 0 0 0 4px var(--surface), 0 0 0 6px var(--accent);
+      animation: pulse-ring 3s ease-in-out infinite;
+      overflow: hidden;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    @keyframes pulse-ring {
+      0%, 100% { box-shadow: 0 0 0 4px var(--surface), 0 0 0 6px var(--accent); }
+      50%       { box-shadow: 0 0 0 4px var(--surface), 0 0 0 10px rgba(108,99,255,.4); }
+    }
+
+    .status-dot {
+      position: absolute;
+      bottom: 6px;
+      right: 6px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #4caf50;
+      border: 3px solid var(--surface);
+      animation: blink 2s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: .5; }
+    }
+
+    .hero h1 {
+      font-size: clamp(1.8rem, 5vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -.5px;
+      background: linear-gradient(135deg, #fff 30%, var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 6px;
+    }
+
+    .age-badge {
+      display: inline-block;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3px 14px;
+      font-size: .8rem;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .hero-subtitle {
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .hero-subtitle strong {
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    /* ── divider ── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 36px 0;
+    }
+
+    /* ── cards ── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px 32px;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .3s, transform .3s;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: 0;
+      transition: opacity .3s;
+    }
+
+    .card:hover::before { opacity: 1; }
+
+    .card-label {
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .card p {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: #c0c0d8;
+    }
+
+    /* ── tags ── */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .tag {
+      background: rgba(108,99,255,.15);
+      border: 1px solid rgba(108,99,255,.3);
+      border-radius: 12px;
+      padding: 6px 16px;
+      font-size: .85rem;
+      color: #a0a0e8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ── telegram card ── */
+    .tg-card {
+      background: linear-gradient(135deg, rgba(41,182,246,.08), rgba(41,182,246,.03));
+      border-color: rgba(41,182,246,.25);
+    }
+
+    .tg-card:hover { border-color: var(--tg); }
+
+    .tg-card::before {
+      background: linear-gradient(90deg, var(--tg), #0288d1);
+    }
+
+    .tg-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .tg-desc {
+      font-size: .95rem;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    /* ── button ── */
+    .btn-tg-wrap {
+      display: block;
+      position: relative;
+      border-radius: 18px;
+    }
+
+    .btn-tg-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 21px;
+      background: linear-gradient(135deg, #29b6f6, #00e5ff, #0288d1, #29b6f6);
+      background-size: 300% 300%;
+      animation: border-spin 3s linear infinite;
+      z-index: 0;
+      filter: blur(4px);
+      opacity: .9;
+    }
+
+    @keyframes border-spin {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .btn-tg {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      background: linear-gradient(135deg, #0fb8f5 0%, #0070c0 50%, #00b4d8 100%);
+      background-size: 200% 200%;
+      color: #fff;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: .3px;
+      padding: 18px 32px;
+      border-radius: 16px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s, background-position .4s;
+      box-shadow: 0 6px 30px rgba(41,182,246,.55), 0 2px 8px rgba(0,0,0,.4);
+      overflow: hidden;
+      animation: btn-pulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes btn-pulse {
+      0%, 100% { box-shadow: 0 6px 30px rgba(41,182,246,.55), 0 2px 8px rgba(0,0,0,.4); }
+      50%       { box-shadow: 0 8px 48px rgba(41,182,246,.85), 0 2px 8px rgba(0,0,0,.4); }
+    }
+
+    /* shimmer sweep */
+    .btn-tg::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -75%;
+      width: 50%; height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,.25), transparent);
+      animation: shimmer 2.8s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0%   { left: -75%; }
+      60%, 100% { left: 125%; }
+    }
+
+    .btn-tg:hover {
+      transform: translateY(-3px) scale(1.02);
+      background-position: right center;
+      box-shadow: 0 12px 48px rgba(41,182,246,.75), 0 4px 12px rgba(0,0,0,.5);
+    }
+
+    .btn-tg:active { transform: scale(.97); }
+
+    .btn-tg svg {
+      width: 26px;
+      height: 26px;
+      fill: #fff;
+      flex-shrink: 0;
+    }
+
+    /* ── stats row ── */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .stat {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px 16px;
+      text-align: center;
+      transition: border-color .3s, transform .3s;
+    }
+
+    .stat:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .stat-icon { font-size: 1.6rem; margin-bottom: 8px; }
+
+    .stat-value {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .stat-label { font-size: .75rem; color: var(--muted); }
+
+    /* ── footer ── */
+    .footer {
+      text-align: center;
+      margin-top: 48px;
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    /* ── floating particles ── */
+    .particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      animation: float linear infinite;
+      opacity: 0;
+    }
+
+    @keyframes float {
+      0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+      10%  { opacity: .6; }
+      90%  { opacity: .2; }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+
+    @media (max-width: 500px) {
+      .stats { grid-template-columns: 1fr 1fr; }
+      .stats .stat:last-child { grid-column: 1 / -1; }
+      .card { padding: 22px 20px; }
+    }
+
+    /* ── section label (standalone) ── */
+    .section-label {
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── projects grid ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px 22px;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .3s, transform .3s;
+    }
+
+    .project-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: 0;
+      transition: opacity .3s;
+    }
+
+    .project-card:hover::before { opacity: 1; }
+
+    .project-icon { font-size: 1.8rem; margin-bottom: 12px; }
+
+    .project-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .project-desc {
+      font-size: .85rem;
+      color: #9090b0;
+      line-height: 1.55;
+      margin-bottom: 14px;
+    }
+
+    .project-link {
+      font-size: .8rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .projects-note {
+      text-align: center;
+      font-size: .85rem;
+      color: var(--muted);
+      margin-bottom: 20px;
+      padding: 0 8px;
+    }
+
+    /* ── contacts ── */
+    .contact-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 6px;
+    }
+
+    .contact-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px 20px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-size: .95rem;
+      font-weight: 600;
+      transition: transform .2s, box-shadow .2s, background .2s;
+    }
+
+    .contact-btn:hover { transform: translateY(-2px); }
+
+    .contact-btn-tg {
+      background: rgba(41,182,246,.12);
+      border: 1px solid rgba(41,182,246,.3);
+      color: var(--tg);
+    }
+
+    .contact-btn-tg:hover {
+      background: rgba(41,182,246,.22);
+      box-shadow: 0 4px 20px rgba(41,182,246,.2);
+    }
+
+    .contact-btn-gh {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.12);
+      color: #d0d0e0;
+    }
+
+    .contact-btn-gh:hover {
+      background: rgba(255,255,255,.1);
+      box-shadow: 0 4px 20px rgba(255,255,255,.08);
+    }
+
+    @media (max-width: 500px) {
+      .projects-grid { grid-template-columns: 1fr; }
+      .contact-links { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- floating particles -->
+<div class="particles" id="particles"></div>
+
+<div class="container">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="avatar-wrap">
+      <div class="avatar"><img src="photo.jpg" alt="Ярослав Мартынов" /></div>
+      <div class="status-dot"></div>
+    </div>
+    <h1>Ярослав Мартынов</h1>
+    <div class="age-badge">26 лет · Юг России</div>
+    <p class="hero-subtitle">
+      Обычный парень, который решил<br>
+      <strong>выйти из найма</strong> и строит путь к этому публично 🚀
+    </p>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-icon">🛢️</div>
+      <div class="stat-value">Север</div>
+      <div class="stat-label">работа в нефтянке</div>
+    </div>
+    <div class="stat">
+      <div class="stat-icon">🤖</div>
+      <div class="stat-value">AI</div>
+      <div class="stat-label">вайб-кодинг</div>
+    </div>
+    <div class="stat">
+      <div class="stat-icon">📈</div>
+      <div class="stat-value">В пути</div>
+      <div class="stat-label">к своему делу</div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="card">
+    <div class="card-label">👤 О себе</div>
+    <p>
+      Работаю в нефтяной компании на севере. В отпуске понял — нужно что-то менять.
+      Открыл для себя <strong style="color:#a0a0e8">ChatGPT и Claude</strong>, начал разбираться.
+      Услышал про вайб-кодинг — и решил попробовать.
+    </p>
+    <p style="margin-top:14px">
+      Программировать не умею, но <strong style="color:#a0a0e8">учусь создавать приложения с помощью ИИ</strong>
+      и показываю весь путь — как есть, без прикрас. 💡
+    </p>
+    <div class="tags">
+      <span class="tag">🚀 Вайб-кодинг</span>
+      <span class="tag">🤖 AI-инструменты</span>
+      <span class="tag">💪 Спорт</span>
+      <span class="tag">🧠 Саморазвитие</span>
+      <span class="tag">🆓 Выход из найма</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PROJECTS -->
+  <div class="section-label">🛠️ Что я уже сделал</div>
+  <div class="projects-grid">
+    <a class="project-card" href="https://martynov-live.github.io/todo-app" target="_blank" rel="noopener">
+      <div class="project-icon">✅</div>
+      <div class="project-title">To-Do планировщик</div>
+      <div class="project-desc">Планировщик задач в стиле Notion. Списки, фильтры, всё как надо</div>
+      <div class="project-link">Открыть →</div>
+    </a>
+    <a class="project-card" href="https://martynov-live.github.io/calculator" target="_blank" rel="noopener">
+      <div class="project-icon">🧮</div>
+      <div class="project-title">Калькулятор</div>
+      <div class="project-desc">Калькулятор в стиле Apple. Простой, красивый, работает</div>
+      <div class="project-link">Открыть →</div>
+    </a>
+    <a class="project-card" href="https://martynov-live.github.io/currency" target="_blank" rel="noopener">
+      <div class="project-icon">💱</div>
+      <div class="project-title">Конвертер валют</div>
+      <div class="project-desc">Конвертер валют с флагами и живым курсом</div>
+      <div class="project-link">Открыть →</div>
+    </a>
+    <a class="project-card" href="https://martynov-live.github.io/barbershop-stat" target="_blank" rel="noopener">
+      <div class="project-icon">✂️</div>
+      <div class="project-title">Лендинг барбершопа</div>
+      <div class="project-desc">Сайт для барбершопа в Анапе. Первый проект для реального бизнеса</div>
+      <div class="project-link">Открыть →</div>
+    </a>
+  </div>
+  <p class="projects-note">Всё это я сделал с помощью ИИ, не написав ни строчки кода руками</p>
+
+  <div class="divider"></div>
+
+  <!-- TELEGRAM -->
+  <div class="card tg-card">
+    <div class="card-label" style="color:var(--tg)">📣 Telegram-канал</div>
+    <div class="tg-title">
+      <span>Мартынов Live</span>
+      <span style="font-size:1rem;color:var(--tg)">✈️</span>
+    </div>
+    <p class="tg-desc">
+      Про спорт, жизнь, мысли — всё как есть 🔥<br>
+      Документирую путь от сотрудника нефтянки до создателя своих продуктов.
+    </p>
+    <div class="btn-tg-wrap">
+      <a class="btn-tg" href="https://t.me/martynovlive" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.26 13.593 4.28 12.67c-.658-.204-.67-.658.136-.975l10.29-3.967c.548-.196 1.027.13.854.96l.334.533z"/>
+        </svg>
+        ✈️ Подписаться на Telegram
+      </a>
+    </div>
+  </div>
+
+  <!-- CONTACTS -->
+  <div class="card" style="margin-top:20px">
+    <div class="card-label">✉️ Написать мне</div>
+    <div class="contact-links">
+      <a class="contact-btn contact-btn-tg" href="https://t.me/martynovlive" target="_blank" rel="noopener">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.26 13.593 4.28 12.67c-.658-.204-.67-.658.136-.975l10.29-3.967c.548-.196 1.027.13.854.96l.334.533z"/></svg>
+        Telegram
+      </a>
+      <a class="contact-btn contact-btn-gh" href="https://github.com/martynov-live" target="_blank" rel="noopener">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.03c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.138 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<!-- footer -->
+<div class="footer">
+  <p>Сделано с помощью ИИ · 2026 · Ярослав Мартынов</p>
+</div>
+
+<script>
+  // generate floating particles
+  const container = document.getElementById('particles');
+  const colors = ['#6c63ff','#ff6584','#29b6f6','#f5a623'];
+
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 6 + 2;
+    p.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${Math.random()*100}%;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      animation-duration:${Math.random()*20+15}s;
+      animation-delay:${Math.random()*15}s;
+    `;
+    container.appendChild(p);
+  }
+
+  // smooth appearance on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.card, .stat').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity .5s ease, transform .5s ease, border-color .3s';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>

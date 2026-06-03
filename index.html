@@ -537,8 +537,87 @@
 
     @media (max-width: 500px) {
       .projects-grid { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
       .contact-links { grid-template-columns: 1fr; }
     }
+
+    /* ── services ── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .service-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px 20px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .3s, transform .3s;
+    }
+
+    .service-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: 0;
+      transition: opacity .3s;
+    }
+
+    .service-card:hover::before { opacity: 1; }
+
+    .service-icon { font-size: 2rem; margin-bottom: 12px; }
+
+    .service-title {
+      font-size: .95rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .service-desc {
+      font-size: .83rem;
+      color: #9090b0;
+      line-height: 1.55;
+    }
+
+    .btn-project-wrap {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .btn-project {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--accent), #9c4dff);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 16px 36px;
+      border-radius: 14px;
+      text-decoration: none;
+      transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 6px 24px rgba(108,99,255,.4);
+    }
+
+    .btn-project:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 36px rgba(108,99,255,.6);
+    }
+
+    .btn-project:active { transform: scale(.97); }
   </style>
 </head>
 <body>
@@ -636,6 +715,31 @@
 
   <div class="divider"></div>
 
+  <!-- SERVICES -->
+  <div class="section-label">💼 Что я могу для вашего бизнеса</div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">🌐</div>
+      <div class="service-title">Сайты и лендинги</div>
+      <div class="service-desc">Сделаю современный сайт для вашего бизнеса — от простого лендинга до каталога с товарами. Адаптивный, быстрый, с уникальным дизайном.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🤖</div>
+      <div class="service-title">Telegram-боты с ИИ</div>
+      <div class="service-desc">Бот который отвечает клиентам 24/7, знает ваш ассортимент и помогает с заказами. Работает пока вы спите.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📱</div>
+      <div class="service-title">Автоматизация бизнеса</div>
+      <div class="service-desc">Напоминания клиентам, онлайн-запись, интеграция с Telegram и мессенджерами. Меньше рутины, больше продаж.</div>
+    </div>
+  </div>
+  <div class="btn-project-wrap">
+    <a class="btn-project" href="https://t.me/martynov_1_9" target="_blank" rel="noopener">💬 Обсудить проект</a>
+  </div>
+
+  <div class="divider"></div>
+
   <!-- TELEGRAM -->
   <div class="card tg-card">
     <div class="card-label" style="color:var(--tg)">📣 Telegram-канал</div>
@@ -707,7 +811,7 @@
     });
   }, { threshold: 0.1 });
 
-  document.querySelectorAll('.card, .stat').forEach(el => {
+  document.querySelectorAll('.card, .stat, .service-card').forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(24px)';
     el.style.transition = 'opacity .5s ease, transform .5s ease, border-color .3s';

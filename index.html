@@ -550,6 +550,7 @@
     }
 
     .service-card {
+      opacity: 1;
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 20px;
@@ -811,7 +812,7 @@
     });
   }, { threshold: 0.1 });
 
-  document.querySelectorAll('.card, .stat, .service-card').forEach(el => {
+  document.querySelectorAll('.card, .stat').forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(24px)';
     el.style.transition = 'opacity .5s ease, transform .5s ease, border-color .3s';
